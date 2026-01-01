@@ -1,0 +1,15 @@
+[project]
+dynamic=["version"]
+name="iqware"
+description="HTTP API for Warehouse Management Applications"
+version="2026.1.0"
+readme="README.md"
+
+[tool.pyright]
+venvPath="."
+venv=".venv"
+exclude=[".venv"]
+
+[tool.pytest]
+testpaths=["tests"]
+pythonpath=["src"]
