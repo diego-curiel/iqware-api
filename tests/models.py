@@ -1,7 +1,8 @@
 from typing import Optional
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import Mapped
 
-from iqware.database.models import Base, BaseTimestamp, TimestampMixin, TimestampUpdate
+from iqware.database.models import (
+    Base, BaseTimestamp, PublicModel, TimestampMixin, TimestampUpdate)
 from pydantic import BaseModel
 
 
@@ -17,8 +18,8 @@ class DummyCreate(BaseDummy):
     ...
 
 
-class DummyRead(BaseTimestamp, BaseDummy):
-    id: int
+class DummyRead(PublicModel, BaseTimestamp, BaseDummy):
+    ...
 
 
 class DummyUpdate(TimestampUpdate, BaseModel):
