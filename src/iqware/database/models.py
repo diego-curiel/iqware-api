@@ -1,7 +1,7 @@
 import datetime
 from typing import Generic, Optional, Sequence
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func
 from sqlalchemy.orm import (DeclarativeBase, Mapped,
                             declarative_mixin, declared_attr, mapped_column)
@@ -25,7 +25,7 @@ class Base(DeclarativeBase):
 @declarative_mixin
 class TimestampMixin:
     created_date: Mapped[Datetime] = mapped_column(
-        server_default=func.now(), nullable=True)
+        server_default=func.now())
     updated_date: Mapped[Datetime] = mapped_column(
         server_default=func.now(), onupdate=func.now())
 
@@ -39,8 +39,14 @@ class TimestampUpdate(BaseModel):
     update_date: Optional[Datetime] = Field(default_factory=utc_now)
 
 
+class PublicModel(BaseModel):
+    id: int
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class PaginatedResponse(BaseModel, Generic[ModelReadT]):
-    page: int
+    index: int
     total_pages: int
     count: int
     content: Sequence[ModelReadT]
