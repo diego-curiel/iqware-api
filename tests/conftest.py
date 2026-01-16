@@ -1,4 +1,4 @@
-from typing import Generator
+from typing import Generator, List
 
 from pytest import fixture
 from sqlalchemy.orm import Session
@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from iqware.database.core import session_manager
 from iqware.database.models import Base
 from tests.db import test_engine, SessionTesting
-from tests.factory import get_dummy_create
+from tests.factory import get_dummy_create, get_dummy_create_batch
 from tests.models import DummyCreate
 
 
@@ -23,3 +23,8 @@ def db_session() -> Generator[Session]:
 @fixture
 def dummy_create() -> DummyCreate:
     return get_dummy_create(name="dummy_test")
+
+
+@fixture
+def dummy_create_batch() -> List[DummyCreate]:
+    return get_dummy_create_batch(name="dummy_test", amount=20)
